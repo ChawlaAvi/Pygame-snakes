@@ -38,7 +38,7 @@ def screen_obj(msg,color,size):
     return textsurface,textsurface.get_rect()
 
 def score(score):
-    text=smallfont.render("Score: "+str(score) ,True , orange)
+    text = smallfont.render(f"Score: {str(score)}", True, orange)
     gameDisplay.blit(text ,[0,0])
 
 def toscreen(msg,color,y_displace,size="small"):
@@ -124,23 +124,23 @@ def snake(block_size,snakelist):
 
 def gameloop():
     global direction
-    
+
     gameexit= False
     gameover = False
-    
+
     snakelist=[]
     snakelength=1
     gameDisplay=pygame.display.set_mode([disp_width,disp_heig])
-    
+
     lead_x=disp_width/2
     lead_y=disp_heig/2
     lead_x_change=0
     lead_y_change=0
     randx=round(random.randrange(AppleThickness,disp_width-AppleThickness))#/10.0)*10.0;
     randy=round(random.randrange(AppleThickness,disp_heig -AppleThickness))#/10.0)*10.0;
-   
-   
-    
+
+
+
 
     while not gameexit:
 
@@ -150,7 +150,7 @@ def gameloop():
             toscreen("Press c to play again or q to quit",orange,50,size="small")
             toscreen("YOUR SCORE IS",orange,80,size="small")
             toscreen(str(snakelength-1),green,100,size="small")
-          
+
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -163,7 +163,7 @@ def gameloop():
                         gameexit=True
                         gameover=False
             pygame.display.update()                            
-            
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 gameexit=True
@@ -186,15 +186,13 @@ def gameloop():
                     direction = "down"
                 if event.key == pygame.K_p:
                     pause()
-                        
+
         lead_x+=lead_x_change
         lead_y+=lead_y_change
         gameDisplay.fill(white)
         gameDisplay.blit(img1,(randx,randy) )
-        
-        snakehead=[]
-        snakehead.append(lead_x)
-        snakehead.append(lead_y)
+
+        snakehead = [lead_x, lead_y]
         snakelist.append(snakehead)
         if len(snakelist) > snakelength:
             del snakelist[0]
@@ -202,16 +200,16 @@ def gameloop():
         for eachsegment in snakelist[:-1]:
             if eachsegment == snakehead:
                 gameover=True
-                 
-                
-    
+
+
+
         snake(block_size,snakelist)
-        
+
         if lead_x >=disp_width or lead_x <0 or lead_y >=disp_heig or lead_y <0:
             gameover=True
 
         score(snakelength-1)
-        
+
         pygame.display.update()
 ##        if lead_x == randx and lead_y == randy:
 ##            randx=round(random.randrange(block_size,disp_width-block_size)/10.0)*10.0;
